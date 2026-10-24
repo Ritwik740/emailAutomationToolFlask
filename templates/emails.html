@@ -7,10 +7,10 @@
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; }
         .sidebar { width: 250px; background: #343a40; padding: 20px; height: 100vh; color: white; }
-        .sidebar a { display: block; color: white; padding: 10px; text-decoration: none; margin: 10px 0; background: #007bff; border-radius: 5px; text-align: center; }
+        .sidebar a { display: block; color: white; padding: 10px; text-decoration: none; margin: 10px 0; background: #dc0000; border-radius: 5px; text-align: center; }
         .sidebar a:hover { background: #0056b3; }
         .content { flex-grow: 1; padding: 20px; }
-        h2 { text-align: center; margin-bottom: 30px; }
+        h2 { text-align: center; margin-bottom: 0px; }
         .user-info { 
             display: flex;
             justify-content: space-between;
@@ -64,7 +64,7 @@
     <h3>Email Tracker</h3>
     <a href="/dashboard">Dashboard</a>
     <a href="/emails">Email Tracking</a>
-    <a href="/server-status">Server Status</a>
+   
 </div>
 
 <div class="content">
@@ -95,7 +95,7 @@
     <table>
         <thead>
             <tr>
-                <th>ID</th>
+                <th>S.No.</th>
                 <th>Recipient</th>
                 <th>Subject</th>
                 <th>Sent Date</th>
@@ -107,7 +107,7 @@
         <tbody>
             {% for email in emails %}
             <tr>
-                <td>{{ email['id'] }}</td>
+               <td>{{ loop.index }}</td>
                 <td>{{ email['email'] }}</td>
                 <td>{{ email['subject'] }}</td>
                 <td>{{ email['sent_date'] }}</td>

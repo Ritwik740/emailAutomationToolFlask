@@ -41,7 +41,7 @@ from email import encoders
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_wtf.csrf import CSRFProtect
-
+import re
 import threading
 from datetime import datetime
 from flask import session, render_template
@@ -349,6 +349,24 @@ def register():
             flash('Please provide both full name and email', 'error')
             return render_template('register.html')
 
+        full_name = full_name.strip()
+        email = email.strip().lower()
+
+        email_regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+        if not re.match(email_regex, email):
+            flash('Invalid email format', 'error')
+            return render_template('register.html')
+
+        
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT email FROM users WHERE email = %s', (email,))
+        user = cursor.fetchone()
+        conn.close()
+        if user:
+            flash('User with this email already exists, please login or use a different email', 'error')
+            return render_template('register.html')
+        
         session['temp_user_data'] = {'full_name': full_name, 'email': email}
         return redirect(url_for('payment'))
 
@@ -1130,10 +1148,14 @@ def send_followup(email_id):
             return redirect('/emails')
 
         # Handle row access depending on DB type
-        if is_production:
-            email = dict(zip([desc[0] for desc in c.description], row))
-        else:
-            email = row
+        # if is_production:
+        #     email = dict(zip([desc[0] for desc in c.description], row))
+        # else:
+        #     email = row
+
+        # row is already a dict in production if DictCursor is used
+        email = dict(row) if not is_production else row
+
 
         def send_single_followup():
             if email['followup_sent'] == 1:
@@ -1146,6 +1168,10 @@ def send_followup(email_id):
             try:
                 sender_email = email['sender_email']
                 sender_password = email['sender_password']
+                # print("Email dict content:", email)
+                # print(f"Logging in as: {sender_email}")
+                # print(f"Password: {sender_password}")
+
                 recipient_email = email['recipient_email']
                 subject = f"Follow-up: {email['subject']}"
                 body = f"Hello {email['recipient_name']},\n\n{email['followup_body']}"

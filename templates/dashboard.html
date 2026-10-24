@@ -6,10 +6,10 @@
     <title>Dashboard | Email Automation Tool</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; }
-        .sidebar { width: 250px; background: #343a40; padding: 20px; height: 100vh; color: white; }
-        .sidebar a { display: block; color: white; padding: 10px; text-decoration: none; margin: 10px 0; background: #007bff; border-radius: 5px; text-align: center; }
+        .sidebar { width: 250px; background: #343a40; padding: 20px; color: white; }
+        .sidebar a { display: block; color: white; padding: 10px; text-decoration: none; margin: 10px 0; background: #dc0000; border-radius: 5px; text-align: center; }
         .sidebar a:hover { background: #0056b3; }
-        .content { flex-grow: 1; padding: 20px; }
+        .content { flex-grow: 1; padding: 20px; background: #f0f0f0; }
         h2 { text-align: center; }
         .user-info { 
             display: flex;
@@ -44,8 +44,14 @@
         }
         form { max-width: 600px; margin: auto; padding: 20px; border-radius: 10px; background: #f9f9f9; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
         label { font-weight: bold; display: block; margin-top: 10px; }
-        input, textarea, button { width: 100%; margin: 5px 0; padding: 8px; border: 1px solid #ccc; border-radius: 5px; }
-        button { background: #007bff; color: white; border: none; cursor: pointer; margin-top: 15px; }
+        input, textarea, button {
+    width: 97%;
+    margin: 9px 0 5px 0;
+    padding: 13px 8px;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+}
+        button { background: #dc0000; color: white; border: none; cursor: pointer; margin-top: 15px; }
         button:hover { background: #0056b3; }
         .alert { padding: 10px; margin: 10px 0; border-radius: 5px; }
         .success { background-color: #d4edda; color: #155724; }
@@ -54,7 +60,11 @@
         .info { background-color: #d1ecf1; color: #0c5460; }
         input[type="file"] { padding: 10px; background-color: #f1f1f1; }
         .file-info { margin-top: 5px; font-size: 0.8em; color: #666; }
-        .section-title { margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd; }
+        .section-title { margin-top: 0px;
+    padding-top: 0px;
+    text-align: center;
+    padding-bottom: 15px;
+    font-size: 26px; }
         .checkbox-container { 
             display: flex; 
             align-items: center;
@@ -119,7 +129,7 @@
     <h3>Dashboard</h3>
     <a href="/dashboard">Dashboard</a>
     <a href="/emails">Email Tracking</a>
-    <a href="/server-status">Server Status</a>
+    <!--<a href="/server-status">Server Status</a>-->
 </div>
 
 <div class="content">
@@ -131,7 +141,7 @@
         <a href="/logout" class="logout-btn">Logout</a>
     </div>
     
-    <h2>Email Tracking</h2>
+<!--     <h2>Email Tracking</h2>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -139,9 +149,9 @@
                 <div class="alert {{ category }}">{{ message }}</div>
             {% endfor %}
         {% endif %}
-    {% endwith %}
+    {% endwith %} -->
 
-    <table>
+    <!--<table>
         <thead>
             <tr>
                 <th>ID</th>
@@ -176,7 +186,7 @@
             </tr>
             {% endfor %}
         </tbody>
-    </table>
+    </table>-->
 
     <form action="/dashboard" method="POST" enctype="multipart/form-data">
         <!-- CSRF token -->
